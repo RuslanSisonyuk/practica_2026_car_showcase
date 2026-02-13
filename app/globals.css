@@ -1,8 +1,28 @@
 @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap");
 
-@import "tailwindcss/preflight";
-@import "tailwindcss/utilities";
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  /* Fonts */
+  --font-inter: "Inter", sans-serif;
+
+  /* Colors */
+  --color-black-100: #2B2C35;
+
+  --color-primary-blue: #2B59FF;
+  --color-primary-blue-100: #F5F8FF;
+
+  --color-secondary-orange: #f79761;
+
+  --color-light-white: rgba(59,60,152,0.03);
+  --color-light-white-100: rgba(59,60,152,0.02);
+
+  --color-grey: #747A88;
+
+  /* Background images */
+  --background-image-pattern: url("/pattern.png");
+  --background-image-hero-bg: url("/hero-bg.png");
+}
 
 * {
   margin: 0;
@@ -70,7 +90,7 @@
 }
 
 .home__filters {
-  @apply mt-12 w-full flex-between items-center flex-wrap gap-5;
+  @apply mt-12 w-full items-center flex-wrap gap-5;
 }
 
 .home__filter-container {
@@ -152,7 +172,7 @@
 }
 
 .custom-filter__options {
-  @apply absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm;
+  @apply absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black focus:outline-none sm:text-sm;
 }
 /* END: Custom Filter styles */
 
@@ -210,7 +230,7 @@
 }
 
 .search-manufacturer__options {
-  @apply absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm;
+  @apply absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black focus:outline-none sm:text-sm;
 }
 
 .search-manufacturer__option {
