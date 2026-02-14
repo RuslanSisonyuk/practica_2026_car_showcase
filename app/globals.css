@@ -2,6 +2,16 @@
 
 @import "tailwindcss";
 
+
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Manrope", sans-serif;
+  }
+}
+
 @theme {
   /* Fonts */
   --font-inter: "Inter", sans-serif;
@@ -22,13 +32,6 @@
   /* Background images */
   --background-image-pattern: url("/pattern.png");
   --background-image-hero-bg: url("/hero-bg.png");
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Manrope", sans-serif;
 }
 
 /* START: General styles */
@@ -90,7 +93,7 @@
 }
 
 .home__filters {
-  @apply mt-12 w-full items-center flex-wrap gap-5;
+  @apply mt-12 w-full flex justify-between items-center flex-wrap gap-5;
 }
 
 .home__filter-container {
