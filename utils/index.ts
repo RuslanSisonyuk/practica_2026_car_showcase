@@ -4,8 +4,7 @@ export async function fetchCars() {
             'x-rapidapi-host': 'cars-by-api-ninjas.p.rapidapi.com'
         }
 
-    const response = await fetch(`const url = 'https://cars-by-a
-        pi-ninjas.p.rapidapi.com/v1/cars?model=corolla&min_comb_mpg=2';`, { 
+    const response = await fetch(`https://cars-by-api-ninjas.p.rapidapi.com/v1/cars?model=corolla&min_comb_mpg=2`, { 
         headers: headers,
         });
 
