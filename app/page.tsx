@@ -6,12 +6,13 @@ import { FilterProps } from "@/types";
 import { fuels, yearsOfProduction } from "@/constants";
 
 export default async function Home({ searchParams }: { searchParams: FilterProps }) {
-  console.log("searchParams: "+searchParams.manufacturer);
+  const params = await searchParams
+
   const allCars = await fetchCars({
-    manufacturer: searchParams.manufacturer || "",
-    year: searchParams.year || 2021,
-    fuel: searchParams.fuel || "",
-    model: searchParams.model || "",
+    manufacturer: params.manufacturer || "",
+    year: params.year || 2021,
+    fuel: params.fuel || "",
+    model: params.model || "",
   });
 
   const isDataEmpty = !Array.isArray(allCars) || allCars.length < 1 || !allCars;
