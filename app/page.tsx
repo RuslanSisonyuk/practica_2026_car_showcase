@@ -4,6 +4,8 @@ import Image from "next/image";
 import { fetchCars } from "@/utils";
 import { FilterProps } from "@/types";
 import { fuels, yearsOfProduction } from "@/constants";
+import { fetchCarImageUrl } from "@/utils";
+import { CarProps } from "@/types";
 
 export default async function Home({ searchParams }: { searchParams: FilterProps }) {
   const params = await searchParams
@@ -18,6 +20,13 @@ export default async function Home({ searchParams }: { searchParams: FilterProps
 
   const isDataEmpty = !Array.isArray(allCars) || allCars.length < 1 || !allCars;
   
+  const carsWithImages = await Promise.all(
+    allCars.map(async (car: CarProps) => ({
+      ...car,
+      imageUrl: await fetchCarImageUrl(car),
+    }))
+  );
+
   console.log(allCars);
   return (
     <main className="overflow-hidden">
@@ -41,8 +50,8 @@ export default async function Home({ searchParams }: { searchParams: FilterProps
         {!isDataEmpty ? (
           <section>
             <div className="home__cars-wrapper">
-              {allCars?.map((car) => (
-                <CarCard key={car.make + car.model} car={car}/>
+              {carsWithImages?.map((car) => (
+                <CarCard key={car.make + car.model + car.year} car={car}/>
               ))}
             </div>
 

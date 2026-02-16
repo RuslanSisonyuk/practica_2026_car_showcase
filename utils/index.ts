@@ -6,13 +6,14 @@ const NHTSA_BASE = 'https://vpic.nhtsa.dot.gov/api/vehicles';
 export async function fetchCars(filters: FilterProps) {
   const { manufacturer, year, model, limit } = filters;
 
-  if (!manufacturer?.trim()) {
-    return [];
-  }
+  // if (!manufacturer?.trim()) {
+  //   return [];
+  // }
 
-  const make = encodeURIComponent(manufacturer.trim());
+  const make = manufacturer?.trim() || 'toyota';
+  const make_encoded = encodeURIComponent(make);
   const modelyear = year ?? new Date().getFullYear();
-  const url = `${NHTSA_BASE}/GetModelsForMakeYear/make/${make}/modelyear/${modelyear}?format=json`;
+  const url = `${NHTSA_BASE}/GetModelsForMakeYear/make/${make_encoded}/modelyear/${modelyear}?format=json`;
 
   const res = await fetch(url, { next: { revalidate: 60 * 60 * 24 } });
   if (!res.ok) return [];
