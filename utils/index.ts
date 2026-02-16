@@ -5,7 +5,7 @@ export async function fetchCars( filters: FilterProps ) {
     const { manufacturer, year, model, fuel } = filters;
 
     const headers = {
-            'x-rapidapi-key': '6fe272275fmsh1a771261bfdf3a7p1c79aajsn8a1969b48a2d',
+            'x-rapidapi-key': process.env.RAPID_API_KEY || '',
             'x-rapidapi-host': 'cars-by-api-ninjas.p.rapidapi.com'
         }
 
