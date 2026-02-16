@@ -53,7 +53,7 @@ export default async function Home({ searchParams }: { searchParams: FilterProps
          ): (
           <div className="home__error-container">
             <h2 className="text-black-100 text-xl font-bold">
-              No car
+              No cars found
             </h2>
             <p>{allCars?.message}</p>
           </div>
