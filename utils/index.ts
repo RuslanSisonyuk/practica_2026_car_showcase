@@ -1,34 +1,61 @@
 import { CarProps } from "@/types";
 import { FilterProps } from "@/types";
 
-export async function fetchCars( filters: FilterProps ) {
-    const { manufacturer, year, model, fuel } = filters;
+const NHTSA_BASE = 'https://vpic.nhtsa.dot.gov/api/vehicles';
 
-    const headers = {
-            'x-rapidapi-key': process.env.RAPID_API_KEY || '',
-            'x-rapidapi-host': 'cars-by-api-ninjas.p.rapidapi.com'
-        }
+export async function fetchCars(filters: FilterProps) {
+  const { manufacturer, year, model } = filters;
 
-    console.log(`https://cars-by-api-ninjas.p.rapidapi.com/v1/cars?make=${manufacturer}&year=${year}&model=${model}&fuel_type=${fuel}`);
-    const response = await fetch(`https://cars-by-api-ninjas.p.rapidapi.com/v1/cars?make=${manufacturer}&year=${year}&model=${model}&fuel_type=${fuel}`, { 
-        headers: headers,
-        });
+  if (!manufacturer?.trim()) {
+    return [];
+  }
 
-    const result = await response.json();
+  const make = encodeURIComponent(manufacturer.trim());
+  const modelyear = year ?? new Date().getFullYear();
+  const url = `${NHTSA_BASE}/GetModelsForMakeYear/make/${make}/modelyear/${modelyear}?format=json`;
 
-    return result;
+  const res = await fetch(url, { next: { revalidate: 60 * 60 * 24 } });
+  if (!res.ok) return [];
+
+  const data = await res.json();
+  const results = data.Results ?? [];
+
+  // Optional: filter by model name (partial match)
+  let list = results;
+  if (model?.trim()) {
+    const m = model.toLowerCase().trim();
+    list = results.filter((r: { Model_Name: string }) =>
+      r.Model_Name.toLowerCase().includes(m)
+    );
+  }
+
+  // Map to CarProps with defaults for fields vPIC doesn't provide
+  return list.map((r: { Make_Name: string; Model_Name: string }) => ({
+    make: r.Make_Name,
+    model: r.Model_Name,
+    year: modelyear,
+    city_mpg: 0,
+    class: '',
+    combination_mpg: 0,
+    cylinders: 0,
+    displacement: 0,
+    drive: 'fwd',
+    fuel_type: 'gas',
+    highway_mpg: '0',
+    transmission: 'a',
+  }));
 }
 
 export const calculateCarRent = (city_mpg: number, year: number) => {
     const basePricePerDay = 50; // Base rental price per day in dollars
     const mileageFactor = 0.1; // Additional rate per mile driven
-    const ageFactor = 0.05; // Additional rate per year of vehicle age
+    const ageFactor = -0.8; // Additional rate per year of vehicle age
 
-    const mileageRate = Math.random() * mileageFactor;
+
+    const mileageRate = city_mpg * mileageFactor;
     const ageRate = (new Date().getFullYear() - year) * ageFactor;
-
     const rentalRatePerDay = basePricePerDay + mileageRate + ageRate;
-
+    
     return rentalRatePerDay.toFixed(0);
 }
 
