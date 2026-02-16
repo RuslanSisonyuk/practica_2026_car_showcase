@@ -5,6 +5,7 @@ import { useState, Fragment } from 'react'
 import { Combobox, ComboboxButton, ComboboxInput, ComboboxOption, ComboboxOptions, Transition } from '@headlessui/react'
 import { SearchManufacturerProps } from '@/types'
 import Image from 'next/image'
+import { CheckIcon } from '@heroicons/react/24/outline'
 
 import { manufacturers } from '@/constants'
 
@@ -36,7 +37,7 @@ const SearchManufacturer = ({ manufacturer, setManufacturer }: SearchManufacture
                 className='search-manufacturer__input'
                 placeholder='Volkswagen'
                 displayValue={(manufacturer: string) => manufacturer}
-                onChange={(event) => setManufacturer(event.target.value)}
+                onChange={(event) => setQuery(event.target.value)}
                 />
 
                 <Transition 
@@ -57,7 +58,7 @@ const SearchManufacturer = ({ manufacturer, setManufacturer }: SearchManufacture
                                         </span>
                                         {selected ? (
                                             <span className={`absolute inset-y-0 left-0 flex items-center pl-3 ${focus ? 'text-white' : 'text-teal-600'}`}>
-                                                {/* <CheckIcon className='w-5 h-5' aria-hidden='true' /> */}    SELASDBSDKJBSAKDS
+                                                <CheckIcon className='w-5 h-5' aria-hidden='true' />
                                             </span>
                                         ) : null}
                                     </>
