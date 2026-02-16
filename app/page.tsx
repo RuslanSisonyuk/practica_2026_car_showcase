@@ -13,6 +13,7 @@ export default async function Home({ searchParams }: { searchParams: FilterProps
     year: params.year || 2021,
     fuel: params.fuel || "",
     model: params.model || "",
+    limit: params.limit || 10,
   });
 
   const isDataEmpty = !Array.isArray(allCars) || allCars.length < 1 || !allCars;
@@ -47,7 +48,7 @@ export default async function Home({ searchParams }: { searchParams: FilterProps
 
             <ShowMore
               pageNumber={(params.limit || 10) / 10}
-              isNext={(10) > allCars.length}
+              isNext={(params.limit || 10) > allCars.length}
             />
           </section>
          ): (

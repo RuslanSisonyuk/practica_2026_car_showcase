@@ -4,7 +4,7 @@ import { FilterProps } from "@/types";
 const NHTSA_BASE = 'https://vpic.nhtsa.dot.gov/api/vehicles';
 
 export async function fetchCars(filters: FilterProps) {
-  const { manufacturer, year, model } = filters;
+  const { manufacturer, year, model, limit } = filters;
 
   if (!manufacturer?.trim()) {
     return [];
@@ -29,8 +29,13 @@ export async function fetchCars(filters: FilterProps) {
     );
   }
 
+  // const limit = filters.limit ?? list.length;
+  console.log("Limit: "+limit);
+
   // Map to CarProps with defaults for fields vPIC doesn't provide
-  return list.map((r: { Make_Name: string; Model_Name: string }) => ({
+  return list
+  .slice(0, filters.limit ?? list.length)
+  .map((r: { Make_Name: string; Model_Name: string }) => ({
     make: r.Make_Name,
     model: r.Model_Name,
     year: modelyear,
@@ -55,7 +60,7 @@ export const calculateCarRent = (city_mpg: number, year: number) => {
     const mileageRate = city_mpg * mileageFactor;
     const ageRate = (new Date().getFullYear() - year) * ageFactor;
     const rentalRatePerDay = basePricePerDay + mileageRate + ageRate;
-    
+
     return rentalRatePerDay.toFixed(0);
 }
 
