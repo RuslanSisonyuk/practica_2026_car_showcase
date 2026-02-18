@@ -6,10 +6,6 @@ const NHTSA_BASE = 'https://vpic.nhtsa.dot.gov/api/vehicles';
 export async function fetchCars(filters: FilterProps) {
   const { manufacturer, year, model, limit } = filters;
 
-  // if (!manufacturer?.trim()) {
-  //   return [];
-  // }
-
   const make = manufacturer?.trim() || 'toyota';
   const make_encoded = encodeURIComponent(make);
   const modelyear = year ?? new Date().getFullYear();
@@ -40,27 +36,18 @@ export async function fetchCars(filters: FilterProps) {
     make: r.Make_Name,
     model: r.Model_Name,
     year: modelyear,
-    city_mpg: 0,
-    class: '',
-    combination_mpg: 0,
-    cylinders: 0,
-    displacement: 0,
     drive: 'fwd',
     fuel_type: 'gas',
-    highway_mpg: '0',
     transmission: 'a',
   }));
 }
 
 export const calculateCarRent = (city_mpg: number, year: number) => {
     const basePricePerDay = 50; // Base rental price per day in dollars
-    const mileageFactor = 0.1; // Additional rate per mile driven
     const ageFactor = -0.8; // Additional rate per year of vehicle age
 
-
-    const mileageRate = city_mpg * mileageFactor;
     const ageRate = (new Date().getFullYear() - year) * ageFactor;
-    const rentalRatePerDay = basePricePerDay + mileageRate + ageRate;
+    const rentalRatePerDay = basePricePerDay + ageRate;
 
     return rentalRatePerDay.toFixed(0);
 }
