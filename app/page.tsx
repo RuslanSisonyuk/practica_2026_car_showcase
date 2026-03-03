@@ -19,13 +19,6 @@ export default async function Home({ searchParams }: { searchParams: FilterProps
   });
 
   const isDataEmpty = !Array.isArray(allCars) || allCars.length < 1 || !allCars;
-  
-  const carsWithImages = await Promise.all(
-    allCars.map(async (car: CarProps) => ({
-      ...car,
-      imageUrl: await fetchCarImageUrl(car),
-    }))
-  );
 
   console.log(allCars);
   return (
@@ -50,7 +43,7 @@ export default async function Home({ searchParams }: { searchParams: FilterProps
         {!isDataEmpty ? (
           <section>
             <div className="home__cars-wrapper">
-              {carsWithImages?.map((car) => (
+              {allCars?.map((car) => (
                 <CarCard key={car.make + car.model + car.year} car={car}/>
               ))}
             </div>

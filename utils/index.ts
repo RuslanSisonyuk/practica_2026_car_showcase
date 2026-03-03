@@ -1,5 +1,6 @@
 import { CarProps } from "@/types";
 import { FilterProps } from "@/types";
+import { NextRequest } from "next/server";
 
 const NHTSA_BASE = 'https://vpic.nhtsa.dot.gov/api/vehicles';
 
@@ -70,30 +71,20 @@ export const generateCarImageUrl = (car: CarProps, angle?: string) => {
     return `${url}`;
 }
 
-const PEXELS_API_URL = 'https://api.pexels.com/v1/search';
 
-export async function fetchCarImageUrl(car: CarProps): Promise<string | null> {
-  const { make, model, year } = car;
-  const query = `${year} ${make} ${model} car`;
-  const key = process.env.PEXELS_API_KEY;
+export function fetchCarImageUrl(car: CarProps, angle?: string) {
+  // const apiKey = "jcmsx43qr_qtbfamspq_u840p7e1j";
+  // if (!apiKey) return console.error('CARSXE_API_KEY is not set');
+  // const make = car.make;
+  // const model = car.model;
 
-  if (!key) return null;
-
-  try {
-    const res = await fetch(
-      `${PEXELS_API_URL}?query=${encodeURIComponent(query)}&per_page=1`,
-      {
-        headers: { Authorization: key },
-        next: { revalidate: 60 * 60 * 24 }, // cache 24h
-      }
-    );
-    if (!res.ok) return null;
-    const data = await res.json();
-    const photo = data.photos?.[0];
-    return photo?.src?.large ?? photo?.src?.medium ?? null;
-  } catch {
-    return null;
-  }
+  // const url = new URL('https://api.carsxe.com/images');
+  // url.searchParams.append('key', apiKey || '');
+  // url.searchParams.append('make', make);
+  // url.searchParams.append('model', model);
+  // url.searchParams.append('year', car.year.toString());
+  // url.searchParams.append('angle', angle || '0');
+  // return `${url}`;
 }
 
 export const updateSearchParams = (type: string, value: string) => {
