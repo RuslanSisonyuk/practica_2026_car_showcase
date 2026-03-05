@@ -1,26 +1,38 @@
 import { Hero } from "@/components";
 import { SearchBar, CustomFilter, CarCard, ShowMore } from "@/components";
-import Image from "next/image";
 import { fetchCars } from "@/utils";
 import { FilterProps } from "@/types";
 import { fuels, yearsOfProduction } from "@/constants";
-import { fetchCarImageUrl } from "@/utils";
-import { CarProps } from "@/types";
+import { auth } from "@/auth";
+import { prisma } from "@/lib/prisma";
 
 export default async function Home({ searchParams }: { searchParams: FilterProps }) {
   const params = await searchParams
 
-  const allCars = await fetchCars({
-    manufacturer: params.manufacturer || "",
-    year: params.year || 2021,
-    fuel: params.fuel || "",
-    model: params.model || "",
-    limit: params.limit || 10,
-  });
+  const [allCars, session] = await Promise.all([
+    fetchCars({
+      manufacturer: params.manufacturer || "",
+      year: params.year || 2021,
+      fuel: params.fuel || "",
+      model: params.model || "",
+      limit: params.limit || 10,
+    }),
+    auth(),
+  ]);
+
+  const bookmarkedKeys = new Set<string>();
+  if (session) {
+    const bookmarks = await prisma.bookmark.findMany({
+      where: { userId: session.user.id },
+      select: { make: true, model: true, year: true },
+    });
+    bookmarks.forEach(({ make, model, year }) =>
+      bookmarkedKeys.add(`${make}|${model}|${year}`)
+    );
+  }
 
   const isDataEmpty = !Array.isArray(allCars) || allCars.length < 1 || !allCars;
 
-  console.log(allCars);
   return (
     <main className="overflow-hidden">
       <Hero />
@@ -32,19 +44,22 @@ export default async function Home({ searchParams }: { searchParams: FilterProps
         </div>
         <div className="home__filters">
           <SearchBar />
-          
+
           <div className="home__filter-container">
             <CustomFilter title="fuel" options={fuels} />
             <CustomFilter title="year" options={yearsOfProduction} />
           </div>
         </div>
 
-
         {!isDataEmpty ? (
           <section>
             <div className="home__cars-wrapper">
               {allCars?.map((car) => (
-                <CarCard key={car.make + car.model + car.year} car={car}/>
+                <CarCard
+                  key={car.make + car.model + car.year}
+                  car={car}
+                  isBookmarked={bookmarkedKeys.has(`${car.make}|${car.model}|${car.year}`)}
+                />
               ))}
             </div>
 
