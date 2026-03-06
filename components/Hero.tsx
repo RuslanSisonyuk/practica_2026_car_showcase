@@ -5,8 +5,10 @@ import CustomButton from './CustomButton'
 
 const Hero = () => {
 
-  const handleScroll = () => {}
-
+  const handleScroll = () => {
+    document.getElementById('discover')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+  
   return (
     <div className="hero">
       <div className='flex-1 pt-36 padding-x'>
@@ -20,7 +22,7 @@ const Hero = () => {
 
         <CustomButton
          title="Explore Cars"
-         containerStyles="bg-primary-blue text-white rounded-full mt-10"
+         containerStyles="bg-primary-blue hover:bg-primary-blue-dark cursor-pointer text-white rounded-2xl mt-10"
          handleClick={handleScroll}
          />
         </div>
