@@ -90,8 +90,8 @@ const CarCard = ({ car, isBookmarked = false }: CarCardProps) => {
                 <Image src={generateCarImageUrl(car)} alt='car model' fill priority className='object-contain'/>
             </div>
 
-            <div className="relative flex w-full mt-2">
-                <div className='flex group-hover:invisible w-full justify-between text-grey'>
+            <div className="relative flex flex-col gap-2 w-full mt-2">
+                <div className='flex flex-row lg:group-hover:invisible w-full justify-between text-grey'>
                     <div className='flex flex-col justify-center items-center gap-2'>
                         <Image src="/steering-wheel.svg" alt='steering wheel' width={20} height={20}/>
                         <p className='text-[14px]'>
