@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation'
 
 import { CarProps } from '@/types'
 import CustomButton from './CustomButton'
-import { calculateCarRent, generateCarImageUrl, fetchCarImageUrl } from '@/utils'
+import { calculateCarRent, generateCarImageUrl } from '@/utils'
 import CarDetails from './CarDetails'
 
 interface CarCardProps {

@@ -1,6 +1,5 @@
 import { CarProps } from "@/types";
 import { FilterProps } from "@/types";
-import { NextRequest } from "next/server";
 
 const NHTSA_BASE = 'https://vpic.nhtsa.dot.gov/api/vehicles';
 
@@ -28,7 +27,7 @@ export async function fetchCars(filters: FilterProps) {
   }
 
   // const limit = filters.limit ?? list.length;
-  console.log("Limit: "+limit);
+  // console.log("Limit: "+limit);
 
   // Map to CarProps with defaults for fields vPIC doesn't provide
   return list
@@ -87,9 +86,15 @@ export function fetchCarImageUrl(car: CarProps, angle?: string) {
   // return `${url}`;
 }
 
-export const updateSearchParams = (type: string, value: string) => {
+export const updateSearchParams = (type: string, value: string, resetLimit?:boolean) => {
   const searchParams = new URLSearchParams(window.location.search);
   searchParams.set(type, value);
+
+  console.log(searchParams);
+  if(resetLimit){
+    searchParams.delete('limit');
+    console.log(searchParams);
+  }
 
   const newPathname = `${window.location.pathname}?${searchParams.toString()}`;
   return newPathname;

@@ -42,7 +42,8 @@ const SearchBar = () => {
         else {
             searchParams.delete("manufacturer");
         }
-
+        
+        searchParams.delete("limit");
         const newPathname = `${window.location.pathname}?${searchParams.toString()}`;
         router.push(newPathname, { scroll: false });
     }
