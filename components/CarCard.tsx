@@ -87,7 +87,7 @@ const CarCard = ({ car, isBookmarked = false }: CarCardProps) => {
             </p>
 
             <div className='relative w-full h-40 my-3 object-contain'>
-                <Image src={generateCarImageUrl(car)} alt='car model' fill priority className='object-contain'/>
+                <Image src={generateCarImageUrl(car)} alt='car model' fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" priority className='object-contain'/>
             </div>
 
             <div className="relative flex flex-col gap-2 w-full mt-2">
