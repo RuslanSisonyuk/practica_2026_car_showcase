@@ -20,6 +20,7 @@
   --color-black-100: #2B2C35;
 
   --color-primary-blue: #2B59FF;
+  --color-primary-blue-dark: #1642de;
   --color-primary-blue-100: #F5F8FF;
 
   --color-secondary-orange: #f79761;
@@ -161,7 +162,7 @@
 }
 
 .car-details__close-btn {
-  @apply absolute top-2 right-2 z-10 w-fit p-2 bg-primary-blue-100 rounded-full;
+  @apply absolute top-2 right-2 z-10 w-fit p-2 bg-primary-blue-100 rounded-md;
 }
 
 .car-details__main-image {

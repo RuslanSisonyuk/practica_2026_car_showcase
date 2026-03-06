@@ -43,7 +43,7 @@ const CarDetails = ( {isOpen, closeModal, car}: CarDetailsProps ) => {
                   overflow-y-auto transform rounded-2xl bg-white p-6 
                   text-left shadow-xl transition-all flex flex-col gap-5">
                     <button type="button" className="absolute top-2 
-                    right-2 z-10 w-fit p-2 bg-primary-blue-100 rounded-full" 
+                    right-2 z-10 w-fit p-2 bg-primary-blue-100 rounded-full cursor-pointer" 
                     onClick={closeModal}>
                       <Image src="/close.svg" alt="close" width={20} height={20} className="object-contain" />
                     </button>

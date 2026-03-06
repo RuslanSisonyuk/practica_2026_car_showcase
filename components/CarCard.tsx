@@ -57,7 +57,7 @@ const CarCard = ({ car, isBookmarked = false }: CarCardProps) => {
                     onClick={toggleBookmark}
                     disabled={bookmarkLoading}
                     aria-label={bookmarked ? 'Remove bookmark' : 'Bookmark this car'}
-                    className="p-1 rounded-full hover:bg-gray-100 transition-colors disabled:opacity-50"
+                    className="p-1 rounded-full hover:bg-gray-100 cursor-pointer transition-colors disabled:opacity-50"
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -115,7 +115,7 @@ const CarCard = ({ car, isBookmarked = false }: CarCardProps) => {
                 <div className="car-card__btn-container">
                     <CustomButton
                     title='View More'
-                    containerStyles='w-full py-[16px] rounded-full bg-primary-blue'
+                    containerStyles='w-full py-[16px] rounded-xl bg-primary-blue cursor-pointer hover:bg-primary-blue-dark  transition-colors'
                     textStyles='text-white text-[14px] leading-[17px] font-bold'
                     rightIcon='/right-arrow.svg'
                     handleClick={() => setIsOpen(true)}

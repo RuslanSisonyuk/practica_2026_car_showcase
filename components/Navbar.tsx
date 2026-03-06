@@ -4,11 +4,13 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useSession, signOut } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 import { CustomButton } from './';
 
 const Navbar = () => {
   const { data: session } = useSession();
+  const router = useRouter();
 
   return (
     <header className='w-full absolute z-10'>
@@ -26,24 +28,24 @@ const Navbar = () => {
         <div className='flex items-center gap-4'>
           {session ? (
             <>
-              <Link href="/bookmarks" className='text-primary-blue font-semibold text-sm hover:underline'>
-                Bookmarks
-              </Link>
+              <CustomButton
+                title="Bookmarks"
+                btnType="button"
+                containerStyles="text-primary-blue cursor-pointer hover:bg-primary-blue hover:text-white transition-colors bg-white rounded-2xl min-w-[130px]"
+                handleClick={() => router.push('/bookmarks')}
+              />
 
-              <Link href="/profile" className='text-primary-blue font-semibold text-sm hover:underline'>
-                {session.user.name ?? session.user.email}
-              </Link>
-
-              {session.user.role === 'ADMIN' && (
-                <Link href="/admin" className='text-primary-blue font-semibold text-sm hover:underline'>
-                  Admin
-                </Link>
-              )}
+              <CustomButton
+                title="Profile"
+                btnType='button'
+                containerStyles="text-primary-blue cursor-pointer hover:bg-primary-blue hover:text-white transition-colors bg-white rounded-2xl min-w-[130px]"
+                handleClick={() => router.push('/profile')}
+              />
 
               <CustomButton
                 title="Sign Out"
                 btnType="button"
-                containerStyles="text-primary-blue bg-white rounded-full min-w-[130px]"
+                containerStyles="text-primary-blue cursor-pointer hover:bg-primary-blue hover:text-white transition-colors bg-white rounded-2xl min-w-[130px]"
                 handleClick={() => signOut({ callbackUrl: '/' })}
               />
             </>
@@ -52,7 +54,7 @@ const Navbar = () => {
               <CustomButton
                 title="Sign In"
                 btnType="button"
-                containerStyles="text-primary-blue bg-white rounded-full min-w-[130px]"
+                containerStyles="text-primary-blue cursor-pointer hover:bg-primary-blue hover:text-white transition-colors bg-white rounded-2xl min-w-[130px]"
               />
             </Link>
           )}

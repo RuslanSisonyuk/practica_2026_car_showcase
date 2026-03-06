@@ -16,7 +16,7 @@ export default async function ProfilePage() {
 
   return (
     <main className="min-h-screen padding-x padding-y max-width pt-36">
-      <h1 className="text-3xl font-extrabold mb-8">My Profile</h1>
+      <h1 className="text-3xl font-extrabold mb-8 mt-20">My Profile</h1>
       <ProfileForm user={user} />
     </main>
   );

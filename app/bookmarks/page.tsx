@@ -31,7 +31,7 @@ export default async function BookmarksPage() {
 
   return (
     <main className="min-h-screen padding-x padding-y max-width pt-36">
-      <div className="home__text-container mb-8">
+      <div className="home__text-container mb-8 mt-20">
         <h1 className="text-4xl font-extrabold">My Bookmarks</h1>
         <p>Your saved cars</p>
       </div>
