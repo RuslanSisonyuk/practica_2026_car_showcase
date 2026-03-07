@@ -3,7 +3,7 @@ import { FilterProps } from "@/types";
 
 const NHTSA_BASE = 'https://vpic.nhtsa.dot.gov/api/vehicles';
 
-export async function fetchCars(filters: FilterProps) {
+export async function fetchCars(filters: FilterProps): Promise<CarProps[]> {
   const { manufacturer, year, model, limit } = filters;
 
   const make = manufacturer?.trim() || 'toyota';
@@ -42,7 +42,7 @@ export async function fetchCars(filters: FilterProps) {
   }));
 }
 
-export const calculateCarRent = (city_mpg: number, year: number) => {
+export const calculateCarRent = (year: number) => {
     const basePricePerDay = 50; // Base rental price per day in dollars
     const ageFactor = -0.8; // Additional rate per year of vehicle age
 
@@ -70,21 +70,6 @@ export const generateCarImageUrl = (car: CarProps, angle?: string) => {
     return `${url}`;
 }
 
-
-export function fetchCarImageUrl(car: CarProps, angle?: string) {
-  // const apiKey = "jcmsx43qr_qtbfamspq_u840p7e1j";
-  // if (!apiKey) return console.error('CARSXE_API_KEY is not set');
-  // const make = car.make;
-  // const model = car.model;
-
-  // const url = new URL('https://api.carsxe.com/images');
-  // url.searchParams.append('key', apiKey || '');
-  // url.searchParams.append('make', make);
-  // url.searchParams.append('model', model);
-  // url.searchParams.append('year', car.year.toString());
-  // url.searchParams.append('angle', angle || '0');
-  // return `${url}`;
-}
 
 export const updateSearchParams = (type: string, value: string, resetLimit?:boolean) => {
   const searchParams = new URLSearchParams(window.location.search);

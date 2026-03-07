@@ -3,6 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
 import { CarCard } from "@/components";
 import { CarProps } from "@/types";
+import { getCarImageUrl } from "@/lib/imageCache";
 
 export default async function BookmarksPage() {
   const session = await auth();
@@ -29,6 +30,10 @@ export default async function BookmarksPage() {
     highway_mpg: "0",
   }));
 
+  const imageUrls = await Promise.all(
+    cars.map((car) => getCarImageUrl(car.make, car.model, car.year))
+  );
+
   return (
     <main className="min-h-screen padding-x padding-y max-width pt-36">
       <div className="home__text-container mb-8 mt-20">
@@ -43,10 +48,11 @@ export default async function BookmarksPage() {
         </div>
       ) : (
         <div className="home__cars-wrapper">
-          {cars.map((car) => (
+          {cars.map((car, i) => (
             <CarCard
               key={car.make + car.model + car.year}
               car={car}
+              imageUrl={imageUrls[i]}
               isBookmarked={true}
             />
           ))}

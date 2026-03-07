@@ -33,3 +33,14 @@ model Bookmark {
 
   @@unique([userId, make, model, year])
 }
+
+model CarImageCache {
+  id        String   @id @default(cuid())
+  make      String
+  model     String
+  year      Int
+  imageUrl  String
+  createdAt DateTime @default(now())
+
+  @@unique([make, model, year])
+}

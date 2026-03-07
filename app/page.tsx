@@ -2,6 +2,7 @@ import { Hero } from "@/components";
 import { SearchBar, CustomFilter, CarCard, ShowMore } from "@/components";
 import { fetchCars } from "@/utils";
 import { FilterProps } from "@/types";
+import { getCarImageUrl } from "@/lib/imageCache";
 import { fuels, yearsOfProduction } from "@/constants";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
@@ -12,7 +13,7 @@ export default async function Home({ searchParams }: { searchParams: FilterProps
   const [allCars, session] = await Promise.all([
     fetchCars({
       manufacturer: params.manufacturer || "",
-      year: params.year || 2021,
+      year: params.year || 2015,
       fuel: params.fuel || "",
       model: params.model || "",
       limit: params.limit || 10,
@@ -30,6 +31,10 @@ export default async function Home({ searchParams }: { searchParams: FilterProps
       bookmarkedKeys.add(`${make}|${model}|${year}`)
     );
   }
+
+  const imageUrls = await Promise.all(
+    allCars.map((car) => getCarImageUrl(car.make, car.model, car.year))
+  );
 
   const isDataEmpty = !Array.isArray(allCars) || allCars.length < 1 || !allCars;
 
@@ -54,10 +59,11 @@ export default async function Home({ searchParams }: { searchParams: FilterProps
         {!isDataEmpty ? (
           <section>
             <div className="home__cars-wrapper">
-              {allCars?.map((car) => (
+              {allCars?.map((car, i) => (
                 <CarCard
                   key={car.make + car.model + car.year}
                   car={car}
+                  imageUrl={imageUrls[i]}
                   isBookmarked={bookmarkedKeys.has(`${car.make}|${car.model}|${car.year}`)}
                 />
               ))}
@@ -73,7 +79,6 @@ export default async function Home({ searchParams }: { searchParams: FilterProps
             <h2 className="text-black-100 text-xl font-bold">
               No cars found
             </h2>
-            <p>{allCars?.message}</p>
           </div>
          )
         }
