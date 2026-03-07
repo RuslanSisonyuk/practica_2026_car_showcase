@@ -61,7 +61,7 @@ export default async function Home({ searchParams }: { searchParams: FilterProps
             <div className="home__cars-wrapper">
               {allCars?.map((car, i) => (
                 <CarCard
-                  key={car.make + car.model + car.year}
+                  key={car.make + car.model + car.year + i}
                   car={car}
                   imageUrl={imageUrls[i]}
                   isBookmarked={bookmarkedKeys.has(`${car.make}|${car.model}|${car.year}`)}
