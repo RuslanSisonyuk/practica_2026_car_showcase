@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation'
 
 import { CarProps } from '@/types'
 import CustomButton from './CustomButton'
-import { calculateCarRent } from '@/utils'
+import { calculateCarRent, generateCarImageUrl } from '@/utils'
 import CarDetails from './CarDetails'
 
 interface CarCardProps {
@@ -17,16 +17,17 @@ interface CarCardProps {
 }
 
 const CarCard = ({ car, imageUrl, isBookmarked = false }: CarCardProps) => {
-    const { city_mpg, year, make, model, transmission, drive, fuel_type = 'Gas' } = car;
+    const { year, make, model, transmission, drive, fuel_type = 'Gas' } = car;
 
     const { data: session } = useSession();
     const router = useRouter();
 
     const [isOpen, setIsOpen] = useState(false);
+    const [imgSrc, setImgSrc] = useState(imageUrl);
     const [bookmarked, setBookmarked] = useState(isBookmarked);
     const [bookmarkLoading, setBookmarkLoading] = useState(false);
 
-    const carRent = calculateCarRent(city_mpg, year);
+    const carRent = calculateCarRent(year);
 
     async function toggleBookmark() {
         if (!session) {
@@ -88,7 +89,7 @@ const CarCard = ({ car, imageUrl, isBookmarked = false }: CarCardProps) => {
             </p>
 
             <div className='relative w-full h-40 my-3 object-contain'>
-                <Image src={imageUrl} alt='car model' fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" priority className='object-contain'/>
+                <Image src={imgSrc} alt='car model' fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" priority className='object-contain' onError={() => setImgSrc(generateCarImageUrl(car))}/>
             </div>
 
             <div className="relative flex flex-col gap-2 w-full mt-2">
