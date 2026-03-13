@@ -27,8 +27,8 @@ export default async function Home({ searchParams }: { searchParams: FilterProps
       where: { userId: session.user.id },
       select: { make: true, model: true, year: true },
     });
-    bookmarks.forEach(({ make, model, year }) =>
-      bookmarkedKeys.add(`${make}|${model}|${year}`)
+    bookmarks.forEach((r:{ make:string, model:string, year:number }) =>
+      bookmarkedKeys.add(`${r.make}|${r.model}|${r.year}`)
     );
   }
 
