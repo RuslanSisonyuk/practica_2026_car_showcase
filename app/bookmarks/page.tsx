@@ -15,19 +15,13 @@ export default async function BookmarksPage() {
     select: { make: true, model: true, year: true },
   });
 
-  const cars: CarProps[] = bookmarks.map(({ make, model, year }) => ({
-    make,
-    model,
-    year,
+  const cars: CarProps[] = bookmarks.map((c:{ make:string, model:string, year:number }) => ({
+    make: c.make,
+    model: c.model,
+    year: c.year,
     drive: "fwd",
     fuel_type: "gas",
     transmission: "a",
-    city_mpg: 0,
-    class: "",
-    combination_mpg: 0,
-    cylinders: 0,
-    displacement: 0,
-    highway_mpg: "0",
   }));
 
   const imageUrls = await Promise.all(
