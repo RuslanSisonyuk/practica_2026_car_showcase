@@ -37,6 +37,7 @@ const Navbar = () => {
         <div className='hidden sm:flex items-center gap-4'>
           {session ? (
             <>
+              {session.user.role === "ADMIN" && <CustomButton title="Admin" btnType="button" containerStyles={btnStyles} handleClick={() => router.push('/admin')} />}
               <CustomButton title="Bookmarks" btnType="button" containerStyles={btnStyles} handleClick={() => router.push('/bookmarks')} />
               <CustomButton title="Profile" btnType='button' containerStyles={btnStyles} handleClick={() => router.push('/profile')} />
               <CustomButton title="Sign Out" btnType="button" containerStyles={btnStyles} handleClick={() => signOut({ callbackUrl: '/' })} />
@@ -79,6 +80,7 @@ const Navbar = () => {
         <div className='sm:hidden bg-white px-6 py-4 flex flex-col gap-3 shadow-md'>
           {session ? (
             <>
+              {session.user.role === "ADMIN" && <CustomButton title="Admin" btnType="button" containerStyles={`${btnStyles} w-full active:bg-primary-blue active:text-white`} handleClick={() => navigate('/admin')} />}
               <CustomButton title="Bookmarks" btnType="button" containerStyles={`${btnStyles} w-full active:bg-primary-blue active:text-white`} handleClick={() => navigate('/bookmarks')} />
               <CustomButton title="Profile" btnType='button' containerStyles={`${btnStyles} w-full active:bg-primary-blue active:text-white`} handleClick={() => navigate('/profile')} />
               <CustomButton title="Sign Out" btnType="button" containerStyles={`${btnStyles} w-full active:bg-primary-blue active:text-white`} handleClick={() => signOut({ callbackUrl: '/' })} />
