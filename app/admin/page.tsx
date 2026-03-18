@@ -21,7 +21,7 @@ export default async function AdminPage() {
 
   return (
     <main className="min-h-screen padding-x padding-y max-width pt-36">
-      <div className="home__text-container mb-8">
+      <div className="home__text-container mb-8 mt-20">
         <h1 className="text-4xl font-extrabold">Admin Panel</h1>
         <p>{users.length} registered user{users.length !== 1 ? "s" : ""}</p>
       </div>
