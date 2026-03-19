@@ -2,7 +2,7 @@
 
 import { CarProps } from '@/types';
 import Image from 'next/image';
-import { Fragment } from 'react';
+import { Fragment, useState } from 'react';
 import { Dialog, Transition, TransitionChild, DialogPanel } from '@headlessui/react';
 import { generateCarImageUrl } from '@/utils';
 
@@ -15,6 +15,8 @@ interface CarDetailsProps {
 }
 
 const CarDetails = ( {isOpen, closeModal, car, imageUrl}: CarDetailsProps ) => {
+  const [imgSrc,setImgSrc] = useState(imageUrl)
+  
   return (
     <>
       <Transition appear show={isOpen} as={Fragment}>
@@ -51,7 +53,7 @@ const CarDetails = ( {isOpen, closeModal, car, imageUrl}: CarDetailsProps ) => {
 
                     <div className="flex-1 flex flex-col gap-3">
                       <div className="relative w-full h-40 bg-pattern bg-cover bg-center rounded-lg">
-                        <Image src={imageUrl} alt='car model' fill priority className='object-contain'/>
+                        <Image src={imgSrc} alt='car model' fill priority className='object-contain' onError={() => setImgSrc(generateCarImageUrl(car))}/>
                       </div>
 
                       <div className="flex gap-3">

@@ -6,6 +6,9 @@ import Providers from "@/components/Providers";
 export const metadata: Metadata = {
   title: "Practice Car Hub",
   description: "Made in 2026. Discover the best cars in the world.",
+  icons: {
+    icon: '/model-icon.png'
+  }
 };
 
 export default function RootLayout({

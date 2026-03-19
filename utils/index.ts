@@ -26,6 +26,8 @@ export async function fetchCars(filters: FilterProps): Promise<CarProps[]> {
     );
   }
 
+  console.log(results[6])
+
   // const limit = filters.limit ?? list.length;
   // console.log("Limit: "+limit);
 
