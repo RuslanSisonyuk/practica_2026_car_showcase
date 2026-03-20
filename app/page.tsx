@@ -10,17 +10,18 @@ import { prisma } from "@/lib/prisma";
 export default async function Home({ searchParams }: { searchParams: FilterProps }) {
   const params = await searchParams
 
+  // get the list if cars by search querry as well as the current session
   const [allCars, session] = await Promise.all([
     fetchCars({
       manufacturer: params.manufacturer || "",
       year: params.year || 2015,
-      fuel: params.fuel || "",
       model: params.model || "",
       limit: params.limit || 10,
     }),
     auth(),
   ]);
 
+  // if user is logged, load the list of their bookmarks from db
   const bookmarkedKeys = new Set<string>();
   if (session) {
     const bookmarks = await prisma.bookmark.findMany({
@@ -32,6 +33,7 @@ export default async function Home({ searchParams }: { searchParams: FilterProps
     );
   }
 
+  // get all image urls, which are later loaded by card component
   const imageUrls = await Promise.all(
     allCars.map((car) => getCarImageUrl(car.make, car.model, car.year))
   );
@@ -51,7 +53,6 @@ export default async function Home({ searchParams }: { searchParams: FilterProps
           <SearchBar />
 
           <div className="home__filter-container">
-            <CustomFilter title="fuel" options={fuels} />
             <CustomFilter title="year" options={yearsOfProduction} />
           </div>
         </div>

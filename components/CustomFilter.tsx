@@ -11,6 +11,7 @@ const CustomFilter = ({ title, options }: CustomFilterProps) => {
 
   const router = useRouter();
 
+  // updates search parameters in the url based on the selected dropdown attribute
   const handleUpdateParams = (e: { title: string, value: string }) => {
     const newPathname = updateSearchParams(title, e.value.toLowerCase(), true);
     router.push(newPathname, { scroll: false });

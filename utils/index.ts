@@ -1,5 +1,6 @@
 import { CarProps } from "@/types";
 import { FilterProps } from "@/types";
+import { manufacturers } from "@/constants";
 
 const NHTSA_BASE = 'https://vpic.nhtsa.dot.gov/api/vehicles';
 
@@ -26,14 +27,9 @@ export async function fetchCars(filters: FilterProps): Promise<CarProps[]> {
     );
   }
 
-  console.log(results[6])
-
-  // const limit = filters.limit ?? list.length;
-  // console.log("Limit: "+limit);
-
   // Map to CarProps with defaults for fields vPIC doesn't provide
   return list
-  .slice(0, filters.limit ?? list.length)
+  .slice(0, limit ?? list.length)
   .map((r: { Make_Name: string; Model_Name: string }) => ({
     make: r.Make_Name,
     model: r.Model_Name,
